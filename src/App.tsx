@@ -1,12 +1,15 @@
-import ManiLayout from "./components/layout/mainLayout"
+import ManiLayout from "./components/layout/MainLayout"
+import ProtectedRoute from "./components/layout/ProtectedRoute"
 
 
 function App() {
 
 
   return (
-    <ManiLayout></ManiLayout>
-  )
+    <ProtectedRoute>
+      <ManiLayout></ManiLayout>
+    </ProtectedRoute>
+  );
 }
 
 export default App
