@@ -1,16 +1,10 @@
-import { Layout } from "antd";
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import { Children, createElement } from "react";
-import { NavLink, Outlet } from "react-router-dom";
-import { adminPaths, adminSidebarItems } from "../../routes/admin.routes";
-import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
+import { Button, Layout } from "antd";
 import Sidebar from "./sidebar";
+import { useAppDispatch } from "../../redux/hooks";
+import { logout } from "../../redux/features/auth/authSlice";
+import { Outlet } from "react-router-dom";
 
-const { Header, Content, Footer, } = Layout;
+const { Header, Content } = Layout;
 
 // const items: MenuProps["items"] = [
 //   {
@@ -52,13 +46,22 @@ const { Header, Content, Footer, } = Layout;
 // ];
 
 const ManiLayout = () => {
+  const dispatch = useAppDispatch();
+
+  const handleLogOut = () => {
+    dispatch(logout());
+  };
+
   return (
     <Layout style={{ height: "100vh" }}>
 
      <Sidebar></Sidebar>
 
       <Layout>
-        <Header style={{ padding: 0 }} />
+        <Header >
+          <Button onClick={handleLogOut}>Logout</Button>
+        </Header>
+
         <Content style={{ margin: "24px 16px 0" }}>
           <div
             style={{
