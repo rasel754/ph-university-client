@@ -53,7 +53,7 @@ const ManiLayout = () => {
   };
 
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout >
 
      <Sidebar></Sidebar>
 
