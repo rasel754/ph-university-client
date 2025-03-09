@@ -1,86 +1,94 @@
-import { Table, TableColumnsType, TableProps } from "antd";
+import { Button, Table, TableColumnsType, TableProps } from "antd";
 import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-}
+import { TAcademicSemester } from "../../../types/academicManagement.type";
+import { useState } from "react";
+import { TQueryParam } from "../../../types";
+
+export type TTableData = Pick<
+  TAcademicSemester,
+ "name" | "year" | "startDate" | "endDate"
+>;
 
 const AcademicSemester = () => {
-  const { data: semesterData } = useGetAllSemestersQuery(undefined);
+  const [params, setParams] = useState<TQueryParam[]|undefined>( undefined);
 
-  const tableData = semesterData?.data?.map(
-    
-    ({ _id, name, startMonth, endMonth, year }) => ({
-      _id,
+  const { data: semesterData , isLoading , isFetching } = useGetAllSemestersQuery(params);
+
+ 
+
+  const tableData =
+    semesterData?.data?.map(({ _id, name, startDate, endDate, year }) => ({
+  
+      key: _id,
       name,
-      startMonth,
-      endMonth,
+      startDate,
+      endDate,
       year,
-    })
-  );
+    })) || [];
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType<TTableData> = [
     {
       title: "Name",
+      key: "name",
       dataIndex: "name",
       showSorterTooltip: { target: "full-header" },
       filters: [
         {
-          text: "Joe",
-          value: "Joe",
+          text: "Autumn",
+          value: "Autumn",
         },
         {
-          text: "Jim",
-          value: "Jim",
+          text: "Fall",
+          value: "Fall",
         },
         {
-          text: "Submenu",
-          value: "Submenu",
-          children: [
-            {
-              text: "Green",
-              value: "Green",
-            },
-            {
-              text: "Black",
-              value: "Black",
-            },
-          ],
+          text: "Summer",
+          value: "Summer",
         },
       ],
-      // specify the condition of filtering result
-      // here is that finding the name started with `value`
-      onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-      sorter: (a, b) => a.name.length - b.name.length,
-      sortDirections: ["descend"],
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      defaultSortOrder: "descend",
-      sorter: (a, b) => a.age - b.age,
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
+      title: 'Year',
+      key: 'year',
+      dataIndex: 'year',
       filters: [
         {
-          text: "London",
-          value: "London",
+          text: '2024',
+          value: '2024',
         },
         {
-          text: "New York",
-          value: "New York",
+          text: '2025',
+          value: '2025',
+        },
+        {
+          text: '2026',
+          value: '2026',
         },
       ],
-      onFilter: (value, record) =>
-        record.address.indexOf(value as string) === 0,
+    },
+    {
+      title: "start month",
+      key: "startMonth",
+      dataIndex: "startDate",
+    },
+    {
+      title: "End month",
+      key: "endMonth",
+      dataIndex: "endDate",
+    },
+    {
+      title: 'Action',
+      key: 'x',
+      render: () => {
+        return (
+          <div>
+            <Button>Update</Button>
+          </div>
+        );
+      },
     },
   ];
 
-  /*
   const data = [
     {
       key: "1",
@@ -107,21 +115,40 @@ const AcademicSemester = () => {
       address: "London No. 2 Lake Park",
     },
   ];
-*/
-  const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
+
+  const onChange: TableProps<TTableData>["onChange"] = (
+    _pagination,
     filters,
-    sorter,
+    _sorter,
     extra
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
+    if (extra.action === "filter") {
+      const queryParams :TQueryParam[] = [];
+
+      filters.name?.forEach((item) =>
+        queryParams.push({ name: "name", value: item })
+      );
+
+      filters.year?.forEach((item) =>
+        queryParams.push({ name: 'year', value: item })
+      );
+
+     setParams(queryParams);
+    }
   };
+
+  if(isLoading){
+    return <div>Loading...</div>
+  }
+
+
   return (
-    <Table<DataType>
+    <Table
+    loading={isFetching}
       columns={columns}
       dataSource={tableData}
       onChange={onChange}
-      showSorterTooltip={{ target: "sorter-icon" }}
+      // showSorterTooltip={{ target: "sorter-icon" }}
     />
   );
 };

@@ -40,7 +40,7 @@ const Sidebar = () => {
       collapsedWidth="0"
       style={{height:'100vh' , position:'sticky' , top:'0', left:'0'}}
       onBreakpoint={(broken) => {
-        console.log(broken);
+        // console.log(broken);
       }}
       onCollapse={(collapsed, type) => {
         console.log(collapsed, type);
