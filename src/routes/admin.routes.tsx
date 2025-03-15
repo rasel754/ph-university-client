@@ -5,9 +5,17 @@ import CreateAcademicDepartment from "../pages/admin/academicManagement/CreateAc
 import CreateAcademicFaculty from "../pages/admin/academicManagement/CreateAcademicFaculty";
 import CreateAcademicSemester from "../pages/admin/academicManagement/CreateAcademicSemester";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import Courses from "../pages/admin/courseManagement/Courses";
+import CreateCourse from "../pages/admin/courseManagement/CreateCourse";
+import OfferCourse from "../pages/admin/courseManagement/OfferCourse";
+import OfferedCourse from "../pages/admin/courseManagement/OfferedCourse";
+import RegisteredSemesters from "../pages/admin/courseManagement/RegisteredSemesters";
+import SemesterRegistration from "../pages/admin/courseManagement/SemesterRegistration";
 import CreateAdmin from "../pages/admin/userManagement/CreateAdmin";
 import CreateFaculty from "../pages/admin/userManagement/CreateFaculty";
 import CreateStudent from "../pages/admin/userManagement/CreateStudent";
+import StudentData from "../pages/admin/userManagement/studentData";
+import StudentDetails from "../pages/admin/userManagement/StudentDetails";
 
 
 export const adminPaths = [
@@ -55,6 +63,20 @@ export const adminPaths = [
     name: "User Management",
     children: [
       {
+        name: "Create Student",
+        paht: "createStudent",
+        element: <CreateStudent></CreateStudent>,
+      },
+      {
+        name: "Students",
+        paht: "StudentData",
+        element: <StudentData></StudentData>
+      },
+      {
+        paht: "StudentData/:studentId",
+        element: <StudentDetails></StudentDetails>
+      },
+      {
         name: "Create Admin",
         paht: "createAdmin",
         element: <CreateAdmin></CreateAdmin>,
@@ -64,13 +86,44 @@ export const adminPaths = [
         paht: "createFaculty",
         element: <CreateFaculty></CreateFaculty>,
       },
-      {
-        name: "Create Student",
-        paht: "createStudent",
-        element: <CreateStudent></CreateStudent>,
-      },
+     
     ],
   },
+  {
+    name:'Course Management',
+    children: [
+      {
+        name: 'Semester Registration',
+        paht: 'semester-registration',
+        element: <SemesterRegistration></SemesterRegistration>
+      },
+      {
+        name: 'Registered Semesters',
+        paht: 'registered-semesters',
+        element: <RegisteredSemesters />,
+      },
+      {
+        name: 'Create Course',
+        paht: 'create-course',
+        element: <CreateCourse />,
+      },
+      {
+        name: 'Courses',
+        paht: 'courses',
+        element: <Courses />,
+      },
+      {
+        name: 'Offer Course',
+        paht: 'offer-course',
+        element: <OfferCourse />,
+      },
+      {
+        name: 'Offered Courses',
+        paht: 'offered-courses',
+        element: <OfferedCourse />,
+      },
+    ],
+  }
 ];
 
 

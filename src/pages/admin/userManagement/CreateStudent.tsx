@@ -1,7 +1,7 @@
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import PHForm from "../../../components/form/PHForm";
 import PHinput from "../../../components/form/PHinput";
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
 import PHSelect from "../../../components/form/PHSelect";
 import { bloodGroupOptions, genderOptions } from "../../../constants/global";
 import PHDatePicker from "../../../components/form/PHDatePicker";
@@ -111,6 +111,7 @@ const CreateStudent = () => {
   }));
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log(data);
 
     const studentData = {
       password: "student12223",
@@ -119,6 +120,7 @@ const CreateStudent = () => {
     const formdata = new FormData();
 
     formdata.append("data", JSON.stringify(studentData));
+    formdata.append("file" , data.image)
 
     addStudent(formdata);
 
@@ -127,18 +129,17 @@ const CreateStudent = () => {
     console.log(Object.fromEntries(formdata));
   };
 
-  
   // const onSubmit: SubmitHandler<FieldValues> = async (data) => {
   //   const studentData = {
   //     password: "student12223",
   //     student: data,
   //   };
-  
+
   //   console.log("Submitting Data:", studentData);
-  
+
   //   await addStudent(studentData);
   // };
-  
+
   return (
     <div>
       <Row>
@@ -187,6 +188,22 @@ const CreateStudent = () => {
                   name="bloodGroup"
                   label="Blood Group"
                 ></PHSelect>
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <Controller
+                  name="image"
+                  render={({ field: { onChange, value, ...field } }) => (
+                    <Form.Item label="Picture">
+                      <Input
+                        type="file"
+                        value={value?.fileName}
+                        {...field}
+                        onChange={(e) => onChange(e.target.files?.[0])}
+                      />
+                    </Form.Item>
+                  )}
+                />
               </Col>
 
               <Divider>Contact Information</Divider>
