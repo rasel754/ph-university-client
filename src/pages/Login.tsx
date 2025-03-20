@@ -22,8 +22,8 @@ const Login = () => {
   // });
 
 const defaultValues =  {
-     userId: "A-0002",
-      password: "admin123",
+     userId: "2030020001",
+      password: "student1234",
    }
 
   const [login]=useLoginMutation();
@@ -48,7 +48,14 @@ try {
 
    dispatch(setUser({ user: user, token: res.data.accessToken }));
     toast.success("Logged in successfully", { id: toastId , duration :2000});
-   navigate(`/${user.role}/dashboard`);
+
+    if(res.data.needsPasswordChange){
+      navigate(`/change-password`);
+    }else{
+      navigate(`/${user.role}/dashboard`);
+    }
+
+   
   }
   catch (err) {
     toast.error("something went wrong", { id: toastId, duration: 2000 });

@@ -6,7 +6,7 @@ function App() {
 
 
   return (
-    <ProtectedRoute>
+    <ProtectedRoute role={undefined}>
       <ManiLayout></ManiLayout>
     </ProtectedRoute>
   );

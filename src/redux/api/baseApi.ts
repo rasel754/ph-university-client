@@ -35,6 +35,9 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   if (result.error?.status === 404){
     toast.error(result?.error?.data?.message);
   }
+  if (result.error?.status === 403){
+    toast.error(result?.error?.data?.message);
+  }
     if (result.error?.status === 401) {
       console.log("send refresh token");
       const res = await fetch(
@@ -66,6 +69,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes:["semseter"],
+  tagTypes:["semseter" ,"courses" ,"offeredCourse"],
   endpoints: () => ({}),
 });

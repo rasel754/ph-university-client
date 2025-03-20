@@ -5,6 +5,8 @@ import Register from "../pages/Register";
 import { routeGenerator } from "../utils/routesGenerator";
 import { adminPaths } from "./admin.routes";
 import { facultyPaths } from "./faculty.routes";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
+import ChangePassword from "../pages/ChangePassword";
 import { studentPaths } from "./student.routes";
 
 const router = createBrowserRouter([
@@ -25,17 +27,29 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <App></App>,
+    element: (
+      <ProtectedRoute role="admin">
+        <App></App>
+      </ProtectedRoute>
+    ),
     children: routeGenerator(adminPaths),
   },
   {
     path: "/faculty",
-    element: <App></App>,
+    element: (
+      <ProtectedRoute role="faculty">
+        <App></App>
+      </ProtectedRoute>
+    ),
     children: routeGenerator(facultyPaths),
   },
   {
     path: "/student",
-    element: <App></App>,
+    element: (
+      <ProtectedRoute role="student">
+        <App></App>
+      </ProtectedRoute>
+    ),
     children: routeGenerator(studentPaths),
   },
 
@@ -43,6 +57,11 @@ const router = createBrowserRouter([
     //aigulo absolute path
     path: "/login",
     element: <Login></Login>,
+  },
+  {
+    //aigulo absolute path
+    path: "/change-password",
+    element: <ChangePassword></ChangePassword>,
   },
   {
     path: "/register",

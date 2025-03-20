@@ -5,12 +5,12 @@ import StudentDashboard from "../pages/student/StudentDashboard";
 export const studentPaths = [
   {
     name: "Dashboard",
-    path: "dashboard",
+    paht: "dashboard",
     element: <StudentDashboard></StudentDashboard>
   },
   {
     name: "Offered Course",
-    path: "offeredCourse",
+    paht: "offeredCourse",
     element: <OfferedCourse></OfferedCourse>
   },
 ];
